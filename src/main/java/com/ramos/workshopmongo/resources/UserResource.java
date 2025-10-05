@@ -1,5 +1,6 @@
 package com.ramos.workshopmongo.resources;
 
+import com.ramos.workshopmongo.domain.Post;
 import com.ramos.workshopmongo.domain.User;
 import com.ramos.workshopmongo.dto.UserDTO;
 import com.ramos.workshopmongo.service.UserService;
@@ -12,6 +13,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -55,4 +57,11 @@ public class UserResource {
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<Set<Post>> findPosts(@PathVariable String id) {
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
+    }
+
 }
